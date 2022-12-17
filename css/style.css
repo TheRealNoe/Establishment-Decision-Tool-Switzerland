@@ -1,0 +1,143 @@
+nav > .container {
+	display: block !important;
+}
+
+.nav-link {
+	margin-right: 10px;
+}
+
+.navbar-toggler {
+	float: right;
+}
+
+#section-home {
+	display: flex;
+  	justify-content: center;
+  	align-items: center;
+}
+
+#header-image {
+	filter: grayscale(100%);
+	width: 100%;
+}
+
+#header-text {
+	position: absolute;
+}
+
+#header-titles {
+	background-color: white;
+    border-radius: 15px;
+    padding: 20px 30px;
+}
+
+.spacer {
+	background-color: #3B71CA;
+}
+
+.form-label {
+	transform: translateY(-1rem) translateY(0.1rem) scale(.8);
+	background-color: #303030;
+    z-index: 10;
+    padding: 0 10px;
+}
+
+.form-outline .form-control{
+	box-shadow: none !important;
+}
+
+.form-outline .form-control {
+	border: 0;
+}
+
+#container-table-results {
+	display: none;
+}
+
+#table-results thead {
+	border-bottom: 2px solid #9E9E9E;
+}
+
+#table-results td {
+	vertical-align: middle;
+}
+
+#table-results tr td:last-child {
+	text-align: right;
+}
+
+#table-results tr:last-child td {
+	border: 0;
+}
+
+.page-item.active .page-link {
+	color: white !important;
+	box-shadow: none !important;
+}
+
+@keyframes fadeNotification {
+	0% {
+		opacity: 0;
+	}
+	15% {
+		opacity: 1;
+	}
+	85% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+#notificationContainer {
+	position: fixed;
+	top: 0;
+	right: 0;
+	display: block;
+	z-index: 2000;
+}
+
+.notificationContent {
+	margin: 20px;
+	padding: 15px;
+	border: 1px solid #00000050;
+	min-width: 30vw;
+	opacity: 0;
+}
+
+.notificationText {
+	margin-bottom: 0;
+}
+
+.fadeNotification {
+	display: block !important;
+	opacity: 0;
+	animation-name: fadeNotification;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: 4s;
+}
+
+#blockUILoader {
+	display: none;
+}
+
+#preloader-gif {
+	height: 128px;
+}
+
+footer .row {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.hslu-logo-container {
+ 	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.hslu-logo {
+	width: 75%;
+}
