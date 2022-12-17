@@ -7,6 +7,9 @@
 		case "getPointsPerCanton":
 			echo getPointsPerCanton();
 			break;
+        case "getTopicData":
+            echo getTopicData();
+            break;
 	}
 
 	function getPointsPerCanton() {
@@ -36,11 +39,11 @@
             return;
         }
 
-        $sql = "CALL getPointsPerKanton(" . $safetyPoints . ", " . $educationPoints . ", " . $jobPoints . ", " . $costPoints . "); ";
-
         $conn = connectToDB();            
-        $result = mysqli_query($conn, $sql) or die("Error in Selecting " . mysqli_error($conn));
-        closeDBConnection($conn);
+        $stmt = $conn->prepare("CALL getPointsPerKanton(?, ?, ?, ?); ");    
+        $stmt->bind_param("dddd", $safetyPoints, $educationPoints, $jobPoints, $costPoints);  
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         $i = 0;
         $maxPunkteTotal = 0;
@@ -58,6 +61,44 @@
 		
 		return substr($returnJSON, 0, -1) . "]}";
 	}
+
+    function getTopicData() {
+        if(!(isset($_POST["topic"]))) {
+            return;
+        }
+
+        $topic = $_POST["topic"];
+
+        if(is_null($topic)) {
+            return $topic;
+        }
+
+        switch($topic) {
+            case "e":
+                $sql = "SELECT (SELECT Kuerzel FROM Kanton AS k WHERE k.ID = sk.Kanton) AS Kanton, Rang, Anzahl AS Kennzahl FROM statistikkantonbildung AS sk ";
+                break;
+            case "j":
+                $sql = "SELECT (SELECT Kuerzel FROM Kanton AS k WHERE k.ID = sk.Kanton) AS Kanton, Rang, Anzahl AS Kennzahl FROM statistikkantonarbeit AS sk ";
+                break;
+            case "s":
+                $sql = "SELECT (SELECT Kuerzel FROM Kanton AS k WHERE k.ID = sk.Kanton) AS Kanton, Rang, Anzahl AS Kennzahl FROM statistikkantonsicherheit AS sk ";
+                break;
+            case "c":
+                $sql = "SELECT (SELECT Kuerzel FROM Kanton AS k WHERE k.ID = sk.Kanton) AS Kanton, Rang, Durchschnittliche_Kosten AS Kennzahl FROM statistikkantonkosten AS sk ";
+                break;
+        }
+
+        $conn = connectToDB();            
+        $result = mysqli_query($conn, $sql) or die("Error in Selecting " . mysqli_error($conn));
+        closeDBConnection($conn);
+
+        $returnJSON = '{"cantons": [ ';
+        while($row = mysqli_fetch_assoc($result)) {
+            $returnJSON .= '{"rang": "' . $row["Rang"] . '", "kuerzel": "' . $row["Kanton"] . '", "kennzahl": "' . $row["Kennzahl"] . '"},';
+        }
+
+        return substr($returnJSON, 0, -1) . "]}";
+    }
 
 	function connectToDB() {
         $connection = mysqli_connect(SERVERNAME, USERNAME, PASSWORD, DB_NAME) or die("Error " . mysqli_error($connection));

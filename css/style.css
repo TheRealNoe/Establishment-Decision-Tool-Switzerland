@@ -29,6 +29,7 @@ nav > .container {
 	background-color: white;
     border-radius: 15px;
     padding: 20px 30px;
+    display: inline-table;
 }
 
 .spacer {
@@ -50,8 +51,12 @@ nav > .container {
 	border: 0;
 }
 
-#container-table-results {
+#container-table-results, #section-details-table {
 	display: none;
+}
+
+#section-go-for-it select {
+	color: gray;
 }
 
 #table-results thead {

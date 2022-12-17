@@ -1,82 +1,59 @@
+const urlParams = new URLSearchParams(window.location.search);
+
 let notificationCount = 0;
-let educationPointsOld = 25;
-let jobPointsOld = 25;
-let safetyPointsOld = 25;
-let costPointsOld = 25;
 
 $(function() {
-    dataTable = $("#table-results").DataTable({
-        order: [[1, "desc"]],
-        rowReorder: true,
-        columnDefs: [
-            {
-                targets: "no-sort",
-                orderable: false
-            }
-        ]
-    });
-
-
-    $(".input-points").change(e => {
-        validateInputs();
-        let sum = countPoints();
-
-        if(sum > 100) {
-            showNotification("You can distribute a maximum of 100 points!", false);
-            $("#input-education").val(educationPointsOld);
-            $("#input-jobs").val(jobPointsOld);
-            $("#input-safety").val(safetyPointsOld);
-            $("#input-costs").val(costPointsOld);
-            sum = parseInt(educationPointsOld) + parseInt(jobPointsOld) + parseInt(safetyPointsOld) + parseInt(costPointsOld);
-            console.log(sum);
-        } else {
-            educationPointsOld = $("#input-education").val();
-            jobPointsOld = $("#input-jobs").val();
-            safetyPointsOld = $("#input-safety").val();
-            costPointsOld = $("#input-costs").val();
-        }
-        $("#pointsToDistribute").html(sum <= 100 ? 100 - sum : 0);
-    });
-
-    $("#inputForm").submit(function(e) {
-        e.preventDefault();
-
-        if(countPoints() < 100) {
-            showNotification("You have to distribute all the points!", false);
-            return;
-        }
-
-        $.blockUI({
-            message: $('#blockUILoader')
-        });
-
-        $.ajax({
-            method: "POST",
-            url: "php/ajax.php",
-            data: {
-                action: "getPointsPerCanton",
-                educationPoints: $("#input-education").val(),
-                jobPoints: $("#input-jobs").val(),
-                safetyPoints: $("#input-safety").val(),
-                costPoints: $("#input-costs").val()
-            }
-        }).done(function(data) {
-            dataTable.clear().draw();
-
-            let json = JSON.parse(data);
-
-            for (var i = 0; i < json.cantons.length; i++){
-                dataTable.row.add([json.cantons[i].title, Math.round(json.cantons[i].totalPoints * 100) + "%", Math.round(json.cantons[i].educationPoints * 100) + "%", Math.round(json.cantons[i].jobPoints * 100) + "%", Math.round(json.cantons[i].safetyPoints * 100) + "%", Math.round(json.cantons[i].costPoints * 100) + "%", '<a class="btn text-white" style="padding: 10px; background-color: #3B71CA;" href="php/article-view.php?id=' + json.cantons[i].id + '" role="button"><i class="far fa-eye"></i></a>']).draw(false);
-            }
-            
-            $("#container-table-results").show();
-
-            $.unblockUI();
-
-            showNotification("Points successfully calculated!", true);
-        });
+    dataTable = $("#table-topic-data").DataTable({
+        order: [[0, "asc"]],
+        rowReorder: true
     });
 });
+
+function showDataTable(topic) {
+    $.blockUI({
+        message: $('#blockUILoader')
+    });
+
+    $.ajax({
+        method: "POST",
+        url: "../php/ajax.php",
+        data: {
+            action: "getTopicData",
+            topic: topic
+        }
+    }).done(function(data) {
+        dataTable.clear().draw();
+
+        let json = JSON.parse(data);
+
+        for (var i = 0; i < json.cantons.length; i++){
+            dataTable.row.add([json.cantons[i].rang, json.cantons[i].kuerzel, json.cantons[i].kennzahl]).draw(false);
+        }
+
+        switch (topic) {
+            case "e":
+                $("#topicDataTitle").html("Topic: Education");
+                $("#value-description").html("Amount of schools");
+                break;
+            case "j":
+                $("#topicDataTitle").html("Topic: Job offer");
+                $("#value-description").html("Amount of jobs");
+                break;
+            case "s":
+                $("#topicDataTitle").html("Topic: Safety");
+                $("#value-description").html("Amount of crimes");
+                break;
+            case "c":
+                $("#topicDataTitle").html("Topic: Living costs");
+                $("#value-description").html("Average cost of living");
+                break;
+        }
+        
+        $("#section-details-table").show();
+
+        $.unblockUI();
+    });
+}
 
 function showNotification(nachricht, success) {
     let notiCount = (notificationCount += 1);
@@ -102,20 +79,4 @@ function showNotification(nachricht, success) {
     setTimeout(function() {
         $("[data-notificationID='" + notiCount + "']").remove();
     }, 4000);
-}
-
-function validateInputs() {
-    $(".input-points").each(function () {
-        $(this).val(Math.abs(parseInt($(this).val())));
-    });
-}
-
-function countPoints() {
-    let sum = 0;
-
-    $(".input-points").each(function () {
-        sum+= parseInt($(this).val());
-    });
-
-    return sum;
 }
