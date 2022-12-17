@@ -53,7 +53,7 @@
             } else {
                 $punkteTotalProzent = $row["PunkteTotal"] / $maxPunkteTotal;
             }
-       		$returnJSON .= '{"title": "' . $row["KantonKuerzel"] . '", "educationPoints": "' . $row["PunkteBildung"] . ' ", "jobPoints": "' . $row["PunkteArbeit"] . ' ", "safetyPoints": "' . $row["PunkteSicherheit"] . ' ", "costPoints": "' . $row["PunkteKosten"] . '", "totalPoints": "' . $punkteTotalProzent . '"},';
+       		$returnJSON .= '{"kuerzel": "' . $row["KantonKuerzel"] . '", "educationPoints": "' . $row["PunkteBildung"] . ' ", "jobPoints": "' . $row["PunkteArbeit"] . ' ", "safetyPoints": "' . $row["PunkteSicherheit"] . ' ", "costPoints": "' . $row["PunkteKosten"] . '", "totalPoints": "' . $punkteTotalProzent . '"},';
         }
 		
 		return substr($returnJSON, 0, -1) . "]}";

@@ -66,7 +66,7 @@ $(function() {
             let json = JSON.parse(data);
 
             for (var i = 0; i < json.cantons.length; i++){
-                dataTable.row.add([json.cantons[i].kuerzel, Math.round(json.cantons[i].totalPoints * 100) + "%", Math.round(json.cantons[i].educationPoints * 100) + "%", Math.round(json.cantons[i].jobPoints * 100) + "%", Math.round(json.cantons[i].safetyPoints * 100) + "%", Math.round(json.cantons[i].costPoints * 100) + "%", '<a class="btn text-white" style="padding: 10px; background-color: #3B71CA;" href="php/detail.php?canton=' + json.cantons[i].kuerzel + '" role="button"><i class="far fa-eye"></i></a>']).draw(false);
+                dataTable.row.add([json.cantons[i].title, Math.round(json.cantons[i].totalPoints * 100) + "%", Math.round(json.cantons[i].educationPoints * 100) + "%", Math.round(json.cantons[i].jobPoints * 100) + "%", Math.round(json.cantons[i].safetyPoints * 100) + "%", Math.round(json.cantons[i].costPoints * 100) + "%", '<a class="btn text-white" style="padding: 10px; background-color: #3B71CA;" href="php/article-view.php?id=' + json.cantons[i].id + '" role="button"><i class="far fa-eye"></i></a>']).draw(false);
             }
             
             $("#container-table-results").show();
