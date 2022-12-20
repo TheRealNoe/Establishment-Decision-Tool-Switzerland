@@ -14,6 +14,10 @@ $(function() {
                 orderable: false
             }
         ]
+    }).on('page.dt', function () {
+        setTimeout(() => {
+            drawMiniBarChart();
+        }, 100);
     });
 
 
@@ -66,10 +70,21 @@ $(function() {
             let json = JSON.parse(data);
 
             for (var i = 0; i < json.cantons.length; i++){
-                dataTable.row.add([json.cantons[i].kuerzel, Math.round(json.cantons[i].totalPoints * 100) + "%", Math.round(json.cantons[i].educationPoints * 100) + "%", Math.round(json.cantons[i].jobPoints * 100) + "%", Math.round(json.cantons[i].safetyPoints * 100) + "%", Math.round(json.cantons[i].costPoints * 100) + "%", '<a class="btn text-white" style="padding: 10px; background-color: #3B71CA;" href="php/detail.php?canton=' + json.cantons[i].kuerzel + '" role="button"><i class="far fa-eye"></i></a>']).draw(false);
+                dataTable.row.add([
+                    json.cantons[i].kuerzel,
+                    Math.round(json.cantons[i].totalPoints * 100) + "%",
+                    Math.round(json.cantons[i].educationPoints * 100) + "%",
+                    Math.round(json.cantons[i].jobPoints * 100) + "%",
+                    Math.round(json.cantons[i].safetyPoints * 100) + "%",
+                    Math.round(json.cantons[i].costPoints * 100) + "%",
+                    '<canvas class="minibarchart" width="100" height="50" data-educationPoints="'+json.cantons[i].educationPoints+'" data-jobPoints="'+json.cantons[i].jobPoints+'" data-safetyPoints="'+json.cantons[i].safetyPoints+'" data-costPoints="'+json.cantons[i].costPoints+'"></canvas>',
+                    '<a class="btn text-white" style="padding: 10px; background-color: #3B71CA;" href="php/detail.php?canton=' + json.cantons[i].kuerzel + '" role="button"><i class="far fa-eye"></i></a>'
+                ]).draw(false);
             }
-            
+
             $("#container-table-results").show();
+
+            drawMiniBarChart();
 
             $.unblockUI();
 
@@ -118,4 +133,39 @@ function countPoints() {
     });
 
     return sum;
+}
+
+function drawMiniBarChart(){
+    var minibarchart = document.getElementsByClassName("minibarchart");
+    for (var i = 0; i < minibarchart.length; i++) {
+        var chart = new Chart(minibarchart[i], {
+            type: 'bar',
+            data: {
+                labels: ['Education', 'Jobs', 'Safety', 'Cost'],
+                datasets: [{
+                label: 'Points',
+                data: [
+                    Math.round(minibarchart[i].getAttribute('data-educationPoints')*100),
+                    Math.round(minibarchart[i].getAttribute('data-jobPoints')*100),
+                    Math.round(minibarchart[i].getAttribute('data-safetyPoints')*100),
+                    Math.round(minibarchart[i].getAttribute('data-costPoints')*100)
+                ],
+                borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: false,
+                plugins: { legend: { display: false }, },
+                scales: {
+                y: {
+                    beginAtZero: true,
+                    display: false
+                },
+                x: {
+                    display: false
+                }
+                }
+            }
+        });
+    }
 }

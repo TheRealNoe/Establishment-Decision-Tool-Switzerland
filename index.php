@@ -95,6 +95,7 @@
 							<th class="fw-bold">Safety</th>
 							<th class="fw-bold">Living costs</th>
 							<th class="no-sort"></th>
+							<th class="no-sort"></th>
 						</tr>
 					</thead>
 					<tbody></tbody>
@@ -141,5 +142,6 @@
 	<script type="text/javascript" src="libs/MDB5-STANDARD-UI-KIT-Free-5.0.0/js/mdb.min.js"></script>
 	<script type="text/javascript" src="libs/DataTables/datatables.min.js"></script>
 	<script type="text/javascript" src="libs/blockUI/jquery.blockUI.js"></script>
+	<script type="text/javascript" src="libs/ChartJS/chart.js"></script>
 	<script type="text/javascript" src="js/script.js"></script>
 </html>
