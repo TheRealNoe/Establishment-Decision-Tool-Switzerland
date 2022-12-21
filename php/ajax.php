@@ -103,14 +103,23 @@
     }
 
     function getRanksPerCanton(){
-        $sql = "SELECT SB.Rang As RangB, SA.Rang AS RangA, SS.Rang AS RangS, SK.Rang AS RangK, (SELECT Kuerzel FROM Kanton AS k WHERE k.ID = SB.Kanton) AS Kanton FROM StatistikKantonBildung SB JOIN statistikkantonarbeit SA ON SA.Kanton = SB.Kanton JOIN statistikkantonsicherheit SS ON SS.Kanton = SB.Kanton JOIN statistikkantonkosten SK ON SK.Kanton = SB.Kanton;";
+        $sql = "SELECT SB.Punkte * (SELECT 10000 / SUM(Punkte) FROM StatistikKantonBildung) As PunkteB, 
+            SA.Punkte * (SELECT 10000 / SUM(Punkte) FROM StatistikKantonArbeit) AS PunkteA,
+            SS.Punkte * (SELECT 10000 / SUM(Punkte) FROM StatistikKantonSicherheit) AS PunkteS,
+            SK.Punkte * (SELECT 10000 / SUM(Punkte) FROM StatistikKantonKosten) AS PunkteK, 
+            (SELECT Kuerzel FROM Kanton AS k WHERE k.ID = SB.Kanton) AS Kanton,
+            (SELECT AVG(Punkte) * 10000 / SUM(Punkte) FROM StatistikKantonBildung) As AvgB,
+            (SELECT AVG(Punkte) * 10000 / SUM(Punkte) FROM StatistikKantonArbeit) As AvgA,
+            (SELECT AVG(Punkte) * 10000 / SUM(Punkte) FROM StatistikKantonSicherheit) As AvgS,
+            (SELECT AVG(Punkte) * 10000 / SUM(Punkte) FROM StatistikKantonKosten) As AvgK
+            FROM StatistikKantonBildung SB JOIN statistikkantonarbeit SA ON SA.Kanton = SB.Kanton JOIN statistikkantonsicherheit SS ON SS.Kanton = SB.Kanton JOIN statistikkantonkosten SK ON SK.Kanton = SB.Kanton;";
         $conn = connectToDB();            
         $result = mysqli_query($conn, $sql) or die("Error in Selecting " . mysqli_error($conn));
         closeDBConnection($conn);
 
         $returnJSON = '{"cantons": [ ';
         while($row = mysqli_fetch_assoc($result)) {
-            $returnJSON .= '{"rangB": "' . $row["RangB"] . '", "RangA": "' . $row["RangA"] . '", "RangS": "' . $row["RangS"] . '", "RangK": "' . $row["RangK"] . '",  "kuerzel": "' . $row["Kanton"] . '"},';
+            $returnJSON .= '{"PunkteB": "' . $row["PunkteB"] . '", "PunkteA": "' . $row["PunkteA"] . '", "PunkteS": "' . $row["PunkteS"] . '", "PunkteK": "' . $row["PunkteK"] . '",  "kuerzel": "' . $row["Kanton"] . '", "AvgB": "' . $row["AvgB"] . '", "AvgA": "' . $row["AvgA"] . '", "AvgS": "' . $row["AvgS"] . '", "AvgK": "' . $row["AvgK"] . '"},';
         }
 
         return substr($returnJSON, 0, -1) . "]}";

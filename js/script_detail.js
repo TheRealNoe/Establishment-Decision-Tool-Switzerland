@@ -25,7 +25,7 @@ function showDataTable(topic) {
         dataTable.clear().draw();
 
         let json = JSON.parse(data);
-        
+
         for (var i = 0; i < json.cantons.length; i++){
             dataTable.row.add([json.cantons[i].rang, json.cantons[i].kuerzel, json.cantons[i].kennzahl]).draw(false);
         }
@@ -58,16 +58,8 @@ function showDataTable(topic) {
 function showChart(canton){
     const dataRang = {
         labels: ['Education', 'Job offer', 'Safety', 'Living costs'],
-        datasets: [
-            {
-                label: "Average",
-                backgroundColor: "#ff00e6",
-                borderColor: "#ff00e6",
-                data: [13.5, 13.5, 13.5, 13.5]
-            },
-        ]
+        datasets: []
     };
-
     $.blockUI({
         message: $('#blockUILoader')
     });
@@ -80,15 +72,22 @@ function showChart(canton){
     }).done(function(data) {
         const colors = ['#e6194B', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#42d4f4', '#f032e6', '#bfef45', '#fabed4', '#469990', '#dcbeff', '#9A6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075', '#a9a9a9', '#ffffff', '#000000',"#FF0000", "#FFFF00", "#00FF00", "#00FFFF", "#0000FF", "#FF00FF"]
         let json = JSON.parse(data);
-        
+        const avgDataSet = {
+            label: "Average",
+            backgroundColor: "#ff00e6",
+            borderColor: "#ff00e6",
+            data: [json.cantons[0].AvgB, json.cantons[0].AvgA, json.cantons[0].AvgS, json.cantons[0].AvgK]
+        }
+        dataRang.datasets.push(avgDataSet)
         for (var i = 0; i < json.cantons.length; i++){
             if (json.cantons[i].kuerzel == canton){
                 const newDataset = {
                     label: json.cantons[i].kuerzel,
                     backgroundColor: colors[i],
                     borderColor: colors[i],
-                    data: [json.cantons[i].rangB, json.cantons[i].RangA, json.cantons[i].RangS, json.cantons[i].RangK],
-                    hidden: false
+                    data: [json.cantons[i].PunkteB, json.cantons[i].PunkteA, json.cantons[i].PunkteS, json.cantons[i].PunkteK],
+                    hidden: false,
+                    borderWidth: 3
                 }
                 dataRang.datasets.push(newDataset)
             }else{
@@ -96,7 +95,7 @@ function showChart(canton){
                     label: json.cantons[i].kuerzel,
                     backgroundColor: colors[i],
                     borderColor: colors[i],
-                    data: [json.cantons[i].rangB, json.cantons[i].RangA, json.cantons[i].RangS, json.cantons[i].RangK],
+                    data: [json.cantons[i].PunkteB, json.cantons[i].PunkteA, json.cantons[i].PunkteS, json.cantons[i].PunkteK],
                     hidden: true
                 }
                 dataRang.datasets.push(newDataset)
