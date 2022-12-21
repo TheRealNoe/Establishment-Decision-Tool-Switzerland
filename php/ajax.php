@@ -10,6 +10,8 @@
         case "getTopicData":
             echo getTopicData();
             break;
+        case "getRanksPerCanton":
+            echo getRanksPerCanton();
 	}
 
 	function getPointsPerCanton() {
@@ -95,6 +97,20 @@
         $returnJSON = '{"cantons": [ ';
         while($row = mysqli_fetch_assoc($result)) {
             $returnJSON .= '{"rang": "' . $row["Rang"] . '", "kuerzel": "' . $row["Kanton"] . '", "kennzahl": "' . $row["Kennzahl"] . '"},';
+        }
+
+        return substr($returnJSON, 0, -1) . "]}";
+    }
+
+    function getRanksPerCanton(){
+        $sql = "SELECT SB.Rang As RangB, SA.Rang AS RangA, SS.Rang AS RangS, SK.Rang AS RangK, (SELECT Kuerzel FROM Kanton AS k WHERE k.ID = SB.Kanton) AS Kanton FROM StatistikKantonBildung SB JOIN statistikkantonarbeit SA ON SA.Kanton = SB.Kanton JOIN statistikkantonsicherheit SS ON SS.Kanton = SB.Kanton JOIN statistikkantonkosten SK ON SK.Kanton = SB.Kanton;";
+        $conn = connectToDB();            
+        $result = mysqli_query($conn, $sql) or die("Error in Selecting " . mysqli_error($conn));
+        closeDBConnection($conn);
+
+        $returnJSON = '{"cantons": [ ';
+        while($row = mysqli_fetch_assoc($result)) {
+            $returnJSON .= '{"rangB": "' . $row["RangB"] . '", "RangA": "' . $row["RangA"] . '", "RangS": "' . $row["RangS"] . '", "RangK": "' . $row["RangK"] . '",  "kuerzel": "' . $row["Kanton"] . '"},';
         }
 
         return substr($returnJSON, 0, -1) . "]}";

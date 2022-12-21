@@ -25,7 +25,7 @@ function showDataTable(topic) {
         dataTable.clear().draw();
 
         let json = JSON.parse(data);
-
+        
         for (var i = 0; i < json.cantons.length; i++){
             dataTable.row.add([json.cantons[i].rang, json.cantons[i].kuerzel, json.cantons[i].kennzahl]).draw(false);
         }
@@ -52,6 +52,77 @@ function showDataTable(topic) {
         $("#section-details-table").show();
 
         $.unblockUI();
+    });
+}
+
+function showChart(canton){
+    const dataRang = {
+        labels: ['Education', 'Job offer', 'Safety', 'Living costs'],
+        datasets: [
+            {
+                label: "Average",
+                backgroundColor: "#ff00e6",
+                borderColor: "#ff00e6",
+                data: [13.5, 13.5, 13.5, 13.5]
+            },
+        ]
+    };
+
+    $.blockUI({
+        message: $('#blockUILoader')
+    });
+    $.ajax({
+        method: "POST",
+        url: "../php/ajax.php",
+        data: {
+            action: "getRanksPerCanton"
+        }
+    }).done(function(data) {
+        const colors = ['#e6194B', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#42d4f4', '#f032e6', '#bfef45', '#fabed4', '#469990', '#dcbeff', '#9A6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075', '#a9a9a9', '#ffffff', '#000000',"#FF0000", "#FFFF00", "#00FF00", "#00FFFF", "#0000FF", "#FF00FF"]
+        let json = JSON.parse(data);
+        
+        for (var i = 0; i < json.cantons.length; i++){
+            if (json.cantons[i].kuerzel == canton){
+                const newDataset = {
+                    label: json.cantons[i].kuerzel,
+                    backgroundColor: colors[i],
+                    borderColor: colors[i],
+                    data: [json.cantons[i].rangB, json.cantons[i].RangA, json.cantons[i].RangS, json.cantons[i].RangK],
+                    hidden: false
+                }
+                dataRang.datasets.push(newDataset)
+            }else{
+                const newDataset = {
+                    label: json.cantons[i].kuerzel,
+                    backgroundColor: colors[i],
+                    borderColor: colors[i],
+                    data: [json.cantons[i].rangB, json.cantons[i].RangA, json.cantons[i].RangS, json.cantons[i].RangK],
+                    hidden: true
+                }
+                dataRang.datasets.push(newDataset)
+            }
+            chart.update()
+        }
+    })
+
+    $.unblockUI();
+
+    const ctx = document.getElementById('chart');
+    let chart = new Chart(ctx, {
+        type: 'line',
+        data: dataRang,
+        options: {
+        scales: {
+            y: {
+                title: {
+                  display: true,
+                  text: 'Rank'
+                },
+                display: true,
+                beginAtZero: true
+              }
+        }
+        }
     });
 }
 

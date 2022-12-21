@@ -9,7 +9,7 @@
 		<link rel="stylesheet" href="../libs/MDB5-STANDARD-UI-KIT-Free-5.0.0/css/mdb.dark.min.css">
 		<link rel="stylesheet" type="text/css" href="../libs/DataTables/datatables.min.css"/>
 	</head>
-	<body>
+	<body onload="showChart('<?=$_GET["canton"]?>')">
 		<header>
 			<nav class="navbar navbar-dark bg-dark navbar-expand-lg navbar-dark fixed-top">
 	            <div class="container">
@@ -54,7 +54,7 @@
 						<?php
 							$connection = mysqli_connect(SERVERNAME, USERNAME, PASSWORD, DB_NAME) or die("Error " . mysqli_error($connection));
 							mysqli_query($connection, "SET NAMES 'utf8'");
-							
+
 							$stmt = $connection->prepare("SELECT Rang FROM StatistikKantonBildung WHERE Kanton = (SELECT ID FROM Kanton WHERE Kuerzel LIKE ?); ");    
 							$stmt->bind_param("s", $_GET["canton"]);  
 							$stmt->execute();
@@ -125,6 +125,11 @@
 				</table>
 			</div>
 		</section>
+		<section id="section-details-chart" class="py-5">
+			<div id="wrapper">
+				<canvas id="chart"></canvas>
+			</div>
+		</section>
 		<section id="section-details-table" class="py-5">
 			<div class="container mb-8">
 				<h1 class="h1-responsive text-center mb-5" id="topicDataTitle"></h1>
@@ -162,4 +167,5 @@
 	<script type="text/javascript" src="../libs/DataTables/datatables.min.js"></script>
 	<script type="text/javascript" src="../libs/blockUI/jquery.blockUI.js"></script>
 	<script type="text/javascript" src="../js/script_detail.js"></script>
+	<script type="text/javascript" src="../libs/ChartJS/chart.js"></script>
 </html>

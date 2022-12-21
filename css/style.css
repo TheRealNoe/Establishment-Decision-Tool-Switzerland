@@ -150,3 +150,16 @@ footer .row {
 .minibarchart{
 	float: right;
 }
+
+#section-details-chart{
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+#wrapper{
+	display: flex;
+	flex-direction: column;
+	align-self:center ;
+	justify-content: center;
+	width: 70%;
+}
