@@ -43,14 +43,23 @@
 		</header>
 		<section class="spacer" style="height: 5px;"></section>
 		<section id="section-manual" class="py-5">
-			<div class="container">
+			<div class="col-md-3 col-sm-1"></div>
+			<div class="container col-md-6 col-sm-10">
 				<h1 class="h1-responsive text-center mb-5">Manual</h1>
-				<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-
-				<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-
-				<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+				<p>With the help of this website you have the possibility to select your preferred housing characteristics and find the most suitable canton. To use the tool, you first need to distribute 100 points according to how important each property is to you. The attributes include education, job offer, security and housing costs.</p>
+				<p>Once you have distributed the 100 points, we use statistics to calculate which canton best fits your criteria. The data for the statistics all come from <a href="https://admin.ch" target="_blank">admin.ch</a> and include:</p>
+				<ul>
+					<li>Structure of the permanent resident population per canton</li>
+					<li>Educational institutions by level of education per canton</li>
+					<li>Vacancies according to selected economic departments per major region</li>
+					<li>Selection of criminal offences per canton</li>
+					<li>Tax calculations per canton</li>
+					<li>Average rent per m^2 per canton</li>
+					<li>Average living space per canton</li>
+				</ul>
+				<p>All data from the last 10 years are included in the calculations.</p>
 			</div>
+			<div class="col-md-3 col-sm-1"></div>
 		</section>
 		<section class="spacer" style="height: 30px;"></section>
 		<section id="section-go-for-it" class="py-5">

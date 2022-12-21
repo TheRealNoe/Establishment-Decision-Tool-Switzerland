@@ -33,15 +33,15 @@ function showDataTable(topic) {
         switch (topic) {
             case "e":
                 $("#topicDataTitle").html("Topic: Education");
-                $("#value-description").html("Amount of schools");
+                $("#value-description").html("Amount of schools per 1000 residents");
                 break;
             case "j":
                 $("#topicDataTitle").html("Topic: Job offer");
-                $("#value-description").html("Amount of jobs");
+                $("#value-description").html("Amount of jobs per 1000 residents");
                 break;
             case "s":
                 $("#topicDataTitle").html("Topic: Safety");
-                $("#value-description").html("Amount of crimes");
+                $("#value-description").html("Amount of crimes per 1000 residents");
                 break;
             case "c":
                 $("#topicDataTitle").html("Topic: Living costs");
