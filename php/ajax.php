@@ -112,7 +112,8 @@
             (SELECT AVG(Punkte) * 10000 / SUM(Punkte) FROM StatistikKantonArbeit) As AvgA,
             (SELECT AVG(Punkte) * 10000 / SUM(Punkte) FROM StatistikKantonSicherheit) As AvgS,
             (SELECT AVG(Punkte) * 10000 / SUM(Punkte) FROM StatistikKantonKosten) As AvgK
-            FROM StatistikKantonBildung SB JOIN statistikkantonarbeit SA ON SA.Kanton = SB.Kanton JOIN statistikkantonsicherheit SS ON SS.Kanton = SB.Kanton JOIN statistikkantonkosten SK ON SK.Kanton = SB.Kanton;";
+            FROM StatistikKantonBildung SB JOIN statistikkantonarbeit SA ON SA.Kanton = SB.Kanton JOIN statistikkantonsicherheit SS ON SS.Kanton = SB.Kanton JOIN statistikkantonkosten SK ON SK.Kanton = SB.Kanton 
+            ORDER BY Kanton;";
         $conn = connectToDB();            
         $result = mysqli_query($conn, $sql) or die("Error in Selecting " . mysqli_error($conn));
         closeDBConnection($conn);
