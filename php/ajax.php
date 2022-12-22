@@ -77,13 +77,13 @@
 
         switch($topic) {
             case "e":
-                $sql = "SELECT (SELECT Kuerzel FROM Kanton AS k WHERE k.ID = sk.Kanton) AS Kanton, Rang, Anzahl AS Kennzahl FROM statistikkantonbildung AS sk ";
+                $sql = "SELECT (SELECT Kuerzel FROM Kanton AS k WHERE k.ID = sk.Kanton) AS Kanton, Rang, Punkte AS Kennzahl FROM statistikkantonbildung AS sk ";
                 break;
             case "j":
-                $sql = "SELECT (SELECT Kuerzel FROM Kanton AS k WHERE k.ID = sk.Kanton) AS Kanton, Rang, Anzahl AS Kennzahl FROM statistikkantonarbeit AS sk ";
+                $sql = "SELECT (SELECT Kuerzel FROM Kanton AS k WHERE k.ID = sk.Kanton) AS Kanton, Rang, Punkte AS Kennzahl FROM statistikkantonarbeit AS sk ";
                 break;
             case "s":
-                $sql = "SELECT (SELECT Kuerzel FROM Kanton AS k WHERE k.ID = sk.Kanton) AS Kanton, Rang, Anzahl AS Kennzahl FROM statistikkantonsicherheit AS sk ";
+                $sql = "SELECT (SELECT Kuerzel FROM Kanton AS k WHERE k.ID = sk.Kanton) AS Kanton, Rang, Punkte AS Kennzahl FROM statistikkantonsicherheit AS sk ";
                 break;
             case "c":
                 $sql = "SELECT (SELECT Kuerzel FROM Kanton AS k WHERE k.ID = sk.Kanton) AS Kanton, Rang, Durchschnittliche_Kosten AS Kennzahl FROM statistikkantonkosten AS sk ";
