@@ -39,7 +39,13 @@
         	</div>
 		</header>
 		<section class="spacer" style="height: 30px;"></section>
-		<section id="section-details" class="py-5">
+		<section id="section-details-chart" class="py-5">
+			<h1 class="h1-responsive text-center mb-5">Score-Chart without user evaluation</h1>
+			<div id="wrapper">
+				<canvas id="chart"></canvas>
+			</div>
+		</section>
+		<section id="section-details" class="py-5 mt-5">
 			<div class="container mb-8">
 				<h1 class="h1-responsive text-center mb-5">Ranking without user evaluation</h1>
 				<table class="table">
@@ -123,11 +129,6 @@
 						</tr>
 					</tbody>
 				</table>
-			</div>
-		</section>
-		<section id="section-details-chart" class="py-5">
-			<div id="wrapper">
-				<canvas id="chart"></canvas>
 			</div>
 		</section>
 		<section id="section-details-table" class="py-5">

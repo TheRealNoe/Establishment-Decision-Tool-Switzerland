@@ -50,7 +50,7 @@ function showDataTable(topic) {
         }
         
         $("#section-details-table").show();
-
+        window.location.hash = "section-details-table";
         $.unblockUI();
     });
 }
@@ -115,7 +115,7 @@ function showChart(canton){
             y: {
                 title: {
                   display: true,
-                  text: 'Rank'
+                  text: 'Points'
                 },
                 display: true,
                 beginAtZero: true
